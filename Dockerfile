@@ -19,9 +19,9 @@ RUN mkdir -p /root/.vnc && \
     echo "password" | x11vnc -storepasswd - /root/.vnc/passwd && \
     chmod 600 /root/.vnc/passwd
 
-# Копируем конфиг Supervisor
-COPY etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY .config/openbox/rc.xml /root/.config/openbox/rc.xml
+## Копируем конфиг Supervisor
+#COPY etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+#COPY .config/openbox/rc.xml /root/.config/openbox/rc.xml
 
 ### VirtualBox Layer ###
 
@@ -38,11 +38,23 @@ COPY app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack /app/Oracle_VM_
 RUN echo 'y' | /usr/bin/VBoxManage extpack install /app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack ; true
 RUN rm /app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack
 
-RUN mkdir /root/VirtualBox\ VMs
+RUN VBoxManage setproperty websrvauthlibrary null
+
+# Копируем конфиг Supervisor. Вернуть на место вверх после отладки
+COPY etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY .config/openbox/rc.xml /root/.config/openbox/rc.xml
+COPY app/bin/start-virtualbox.sh /app/bin/start-virtualbox.sh
+RUN chmod +x /app/bin/start-virtualbox.sh
+
+RUN mkdir -p /app/data
+RUN mkdir -p /app/kernel-modules
+RUN mkdir -p /app/inject-volumes
+RUN mkdir -p /app/iso
 
 # Открываем порты
 EXPOSE 5900
 EXPOSE 5901
+EXPOSE 18083
 
 # Запуск Supervisor
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
