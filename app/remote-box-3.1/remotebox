@@ -1,0 +1,27 @@
+#!/usr/bin/env perl
+# ^^^ You may need to change this to the location of your perl interpreter
+# RemoteBox v3.1 (c) 2010-2022 Ian Chapman. Licenced under the terms of the GPL
+use strict;
+use warnings;
+use FindBin qw($Bin);
+use POSIX qw(ceil);
+use MIME::Base64;
+# *** PACKAGERS MAY WISH TO PATCH THIS LOCATION ***
+use lib "$Bin/share/remotebox";
+# *************************************************
+use vboxService qw($endpoint $fault :all);
+# *** PACKAGERS MAY WISH TO PATCH THIS LOCATION ***
+our $sharedir = "$Bin/share/remotebox";
+# *************************************************
+
+require 'vboxserializers.pl';
+require 'rbox_glue.pl';
+require 'rbox_lists.pl';
+require 'rbox_prefs.pl';
+require 'rbox_gui_init.pl';
+require 'rbox_newguest.pl';
+require 'rbox_edit.pl';
+require 'rbox_vmm.pl';
+require 'rbox_err.pl';
+require 'rbox_main.pl';
+$|=1;

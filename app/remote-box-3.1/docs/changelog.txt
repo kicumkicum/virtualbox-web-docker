@@ -1,0 +1,822 @@
+3.1 (16 Jan 2022)
+-----------------
+
+- Changed the RemoteBox logo
+- Various minor GUI tweaks
+- Added button to save the message log to a text file. Might be useful for
+  debugging purposes.
+- Fixed: Regression introduced in 3.0 caused Connection Profiles dialog to
+  essentially stop working correctly, potentially losing existing profiles in
+  the process.
+- Fixed: Regression introduced in 3.0 meant that NAT rules were not shown for
+  IPv4 and IPv6 networks
+- Fixed column sorting in the VMM (Virtual Media Manager)
+- Fixed various list selection bugs. The get_selected() method under GTK3
+  returns both the model and the iterator, not just the iterator as with GTK2
+- RemoteBox is no longer bundled with a PDF manual. Documentation is now
+  exclusively maintained on the RemoteBox web site.
+
+
+3.0 (14 Nov 2021)
+-----------------
+- RemoteBox has been ported to Gtk3. Review the requirements before updating
+  to ensure your operating system is compatible.
+
+
+2.8 (09 Nov 2021)
+-----------------
+
+The changes don't really justify a release however this is likely to be the
+last release of RemoteBox based on Gtk2 as RemoteBox is being ported to
+Gtk3.
+
+- Removed hearbeat option as it's no longer required
+- Server memory bar updates changed to 58 seconds
+- Added option to bind the RDP/VNC server for a guest to a specific IP or
+  hostname.
+- Fixed copy and clone of disks. Regression caused by passsing incorrect
+  datatype to the API
+- Added OS icon for Windows 11
+
+
+2.7 (18 Dec 2019)
+-----------------
+
+- RemoteBox now requires VirtualBox 6.1.x
+- VirtualBox now requires hardware virtualization and no longer supports
+  software virtualization. Removed associated options from RemoteBox.
+- Removed option of setting the video side-channel quality for an RDP
+  connection. This option is largely unsupported by RDP clients and not
+  particularly useful.
+- Added support for the Virtio-SCSI controller
+- Added support for the AMD PCNet-ISA/NE2100 network card
+- Added support for nested hardware virtualization (VT-x/AMD-V) for supported
+  processors
+- Added toolbar buttons in the VMM to create new hard disk images, new floppy
+  disk images (from 360K to 2.88MB) and move media to new locations
+- Newly created floppy disk images can be optionally pre-formatted with FAT12
+- Added a menu option when attached storage for creating a new floppy disk
+  image and automatically attaching it
+- Added option to specify MAC address policy when importing an appliance
+- Added options to specify MAC address policy and include ISO files when
+  exporting an appliance
+- Added options to Keep disk UUIDs, specify MAC policy and keep disk names when
+  cloning a guest
+- Added OS icon for Windows 2019 64bit
+- Rewrote the copy and disk conversion code, should be cleaner and faster
+- Creating a new guest, now uses the ApplyDefaults API call which was broken
+  in previous versions of VirtualBox. This allows a lot of code cleanups and
+  faster guest creation
+- Fixed incorrect URL on About window
+- Various code cleanups
+
+
+2.6 (06 Jan 2019)
+-----------------
+
+- RemoteBox now requires VirtualBox 6.0.x
+- Added additional screen modes for video capture and video hinting
+- Added option to select between Video and Audio, Video Only or Audio Only when
+  screen capturing
+- Added support for VirtualBox VGA card with VMware SVGA II extensions
+- Added support for having no graphics card in the guest. Note however, you
+  cannot connect to the guest with RDP/VNC without a virtual graphics card.
+- Added support for setting the emulated serial UART type
+- The Audio Input and Audio Output options can now also be set while the guest
+  is running
+- Added support to the VMM (Virtual Media Manager) for compaction of hard disk
+  images to reduce their physical size
+- Added support to the VMM (Virtual Media Manager) for resizing hard disk
+  images
+- Added ability to save a guest log to a local text file
+- Added refresh button to reload the guest logs in the log viewer
+- Added cancel button to the VirtualBox Preferences dialog
+- Removed Host-Only-Network and NAT Network configuration from the VirtualBox
+  preferences dialog and created the Host Network Manager dialog accessible from
+  the file menu
+- Significantly updated the RemoteBox icon set and added additional decals
+- To work around a VirtualBox bug, when changing a shared folder the guest
+  settings are now explicitly saved. This includes adding, editing and deleting
+- Optimised a lot of the settings retrieval code which should improve latency
+  especially for those on slower systems and networks.
+- Fixed the Edit Shared Folder dialog not correctly showing a share's Permanent
+  Status, when editing the shared folder.
+- Various code cleanups
+
+
+2.5 (29 Apr 2018)
+-----------------
+
+- RemoteBox now only pops up a VirtualBox Extensions warning dialog on login,
+  for server operating systems that have them available but the extension pack
+  is not installed. Currently this is Linux, Solaris, Windows and MacOS X.
+  Others such as FreeBSD will just get a warning in the message log as there
+  are no VirtualBox extensions.
+- Added support for setting the Audio driver of a guest when using a FreeBSD
+  server
+- Improved the code which automatically adds the guest addition ISO to the VMM
+  on login which should prevent an error if the server does not provide a guest
+  additions ISO
+- Added support for VNC. If your server has the VNC extension pack installed,
+  you can use VNC to connect to the guest displays instead of RDP. You must
+  install a VNC client on your RemoteBox machine and configure it as
+  appropriate in your preferences. TigerVNC is the default client
+- The guest display icon now shows whether the server expects a VNC or RDP
+  connection when opening the display of guests.
+- Added option to change the floppy drive type to 360k, 720k, 1.44MB, 2.88MB
+  15.6MB and 63.5MB.
+- Added a button to assist with the automatic generation of serial port paths
+- Fixed a bug causing the port path setting to be reset with the defaults
+- Fixed audio support for Solaris servers. The SolAudio driver is non
+  functional in VirtualBox and has been replaced with OSS.
+
+
+2.4 (4 Nov 2017)
+----------------
+
+- RemoteBox now requires VirtualBox 5.2.x
+- Updated guest icons
+- Added option to enable/disable audio output from a guest
+- Added option to enable/disable audio input to a guest
+- Added option to record audio from the guest when capturing a video
+- Added support for exporting appliances to Oracle Public Cloud Format 1.0
+- Added ability to select a connection profile to use for automatically logging
+  in when starting up RemoteBox.
+- Added option 'Release Keys' to clear any held keys in the case where a host
+  and guest's keyboard status may become out of sync.
+- New guests now automatically have their audio output enabled
+- Fixed: You now can't set video RAM to zero, even though VirtualBox reports
+  this as a valid minimum, the guest won't start.
+
+
+2.3 (5 May 2017)
+----------------
+
+- Implemented a connection profile manager and changed the connection dialog.
+  Passwords can optionally be saved, however if you're highly concerned about
+  security, the password can still be manually entered at connection time.
+- Improved remote file choosers by remembering their last location throughout a
+  RemoteBox session.
+- Added preference option to sort the guest list alphabetically or leave it in
+  natural order.
+- Default RDP option now uses the FreeRDP new syntax unless previously
+  configured
+- Added OS icon for Windows 2016
+- Fixed regression when setting setting the auto start delay time for a guest,
+  it would get reset to 0
+- When renaming the current snapshot, the new name would not be shown in the
+  guest list until refreshed. This has now been fixed.
+- Various minor GUI tweaks
+
+
+2.2 (15 Aug 2016)
+-----------------
+- RemoteBox now requires VirtualBox 5.1.x
+- Added support for adding an NVMe Controller to the guest
+- Added the ability to set the number of SAS ports
+- Added support for setting the hot-pluggable flag on harddisk and optical
+  devices attached to SATA or USB storage controllers
+- Added support for specifying whether a disk controller should be bootable or
+  not
+- Updated the number of possible SAS ports from 8 to 255 for an attached medium
+- Updated FreeBSD guest OS Icons
+- Fixed a bug when assigning a different SAS port to a medium. RemoteBox was
+  not creating the SAS port first causing a port out of range error.
+- Fixed a bug when selecting storage attached to the USB controller. RemoteBox
+  incorrectly showed the IDE controller attributes.
+- Set default guest OS types for new guests to Windows 10 64bit, Fedora 64bit,
+  FreeBSD 64bit and DOS for their respective OS families
+- Minor changes to the appdata.xml
+- Various GUI tweaks
+
+
+2.1 (01 Jun 2016)
+-----------------
+
+- Added support for TCP mode on virtual serial ports
+- Added support for encryption of the guest
+- Added additional fields in the VMM, Encrypted & UUID
+- Added support for 4 serial ports
+- Added support for setting the audio controller codec
+- Paused guests can now be powered off
+- Set default guest OS types for new guests to Windows 7 64bit, Ubuntu 64bit,
+  Solaris 11 64bit for their respective OS families
+- Improved logon failure error reporting. It should help determine whether the
+  failed logon is incorrect credentials or the service not running
+- Fixed an issue exporting appliances of guests with USB attached storage. USB
+  attached storage is not supported by appliances.
+- Various GUI tweaks
+
+
+2.0 (11 Jul 2015)
+-----------------
+
+- RemoteBox now requires VirtualBox 5.0.x.
+- Added guest support for USB 3.0.
+- Added OS icons for Windows 10, OS/2 1.x, Yosemite, El Capitan
+- Added command line options for automatic login. See manual.
+- Added option to set the virtual VGA card of a guest to either VirtualBox VGA
+  or VMware SVGA-II
+- Allow snapshots to be taken while the guest is paused
+- Added support for adding USB storage controller to a guest
+- Added support for adding transient shared folders
+- Added support for setting IPv6 Port Forwarding rules on NAT networks
+- Added option to convert disk images to VDI when importing an appliance
+- Changed the way guest details are displayed and added an option to show
+  extended (slower) or reduced (faster) guest details
+- Added support for selecting built-in presets for the RDP clients. These are
+  currently FreeRDP (New Syntax), FreeRDP (Old Syntax), Rdesktop, Windows
+  Remote Desktop Client
+- Added support for selecting the paravirtualization interface for a guest
+- Added keyboard toolbutton for quick access to common keyboard sequences. The
+  full keyboard menu is still available
+- Fixed a problem with trailing slashes in a URL preventing the remote display
+  to a guest from opening.
+- Fixed a problem with UTF8 strings affecting the listing of storage attached
+  to controllers
+- Fixed an issue where 'Stuck' guests couldn't be stopped from the GUI.
+- Various GUI tweaks
+
+
+1.9 (26 Oct 2014)
+-----------------
+
+- Combined guest logs onto a single tabbed window
+- Added fix to show documentation when running on Windows.
+- Added Memory Bar to show memory usage on the server
+- Added support for importing OVF/OVA appliances
+- Added support for exporting a VM as an OVF/OVA appliance
+- Added support for setting IPv4 Port Forwarding rules on NAT networks
+- Improvements made to error handling on most dialogs
+- Various GUI tweaks
+
+
+1.8.1 (8 Jun 2014)
+------------------
+
+- Minor update to fix a SOAP versioning bug experienced by some users
+- Bundle an .appdata.xml file for packagers which wish to use it
+
+
+1.8 (16 May 2014)
+-----------------
+
+- Added option to automatically start chosen guests when the host system boots.
+  This requires some server side configuration before it can be used. Consult
+  the RemoteBox manual for more information.
+- Added option to set the start delay on an autostarting guest so that guests
+  can be started up in a specific sequence if required.
+- Added option to set the shutdown type on a guest when the host is shutdown
+- Added VirtualBox preference to set the location of the autostart database
+- Snapshot Tree: Moved 'current state' underneath the most recent snapshot in
+  the tree
+- Added state icons to the snapshot list, which indicate if a snapshot is an
+  online or offline snapshot
+- Optimized list handling in several places which should improve performance
+  and remember selections on list refreshes where practical.
+- Added additional information when a storage medium is selected in the VMM
+- Added additional guest keyboard shortcuts, Ctrl-Alt-(F4, F5, F6, F8, F9,
+  F10, F11)
+- Added ability to add, remove and edit NAT Networks via the VirtualBox
+  preferences menu item. Port forwarding rules must be configured elsewhere
+  for the moment.
+- Added option to set the network attachment type in the guest settings to
+  'NAT Network'. These are named NAT networks which are subtly different to
+  just 'NAT'.
+- Added option to set the snapshot folder location for a guest
+- Added OS icons for various editions of MacOS X.
+- Added support for guest groups. Groups are shown in a tree-fashion which is
+  somewhat visually different to VirtualBox. Setting guest groups is fairly
+  rudimentary at the moment requiring you to enter the group in the form of
+  '/group/subgroup'.
+- Added 'Expand All Groups' and 'Collapse All Groups' buttons. The last used
+  button is remembered for subsequent refreshes of the guest list
+- Fixed some Windows guest icons.
+- Fixed a bug when creating Host-Only networks. An associated virtual DHCP
+  server wasn't getting created which would cause invalid object references and
+  ultimately made the Host-Only network feature useless.
+- Fixed a bug when entering folders in the remote file chooser that denied
+  permission but the location was still updated. Now also warns that you
+  don't have permission to enter that folder
+- Fixed a bug where a medium would be masked out in lists if another medium
+  with the same name existed.
+- Fixed a bug where the Video Memory could get erroneously pegged to 1MB on
+  the first opening on the settings dialog.
+- Inaccessible guests are now filtered from the list of guests and a warning
+  issued in the message log. RemoteBox has never handled inaccessible guests
+  well and for the most part the cause is generally the user manipulating
+  guests without VirtualBox's knowledge.
+- Various GUI tweaks
+
+
+1.7 (30 Jan 2014)
+-----------------
+
+- Added Video Capture support for the guest's display
+- FreeRDP (aka xfreerdp) is now the default and recommended RDP client. If you
+  used rdesktop previously, your preferences will follow however you can update
+  your preferences if you desire. Go to File->RemoteBox Preferences and under
+  RDP client, change it to:
+  xfreerdp -g %Xx%Y --plugin cliprdr --plugin rdpsnd -T "%n - RemoteBox" %h:%p
+  NOTE: You may need to install the freerdp package for your operating system.
+- Added additional substitutions for use with the RDP Client preference. These
+  are:
+    %X - The Auto-Hint Resolution width
+    %Y - The Auto-Hint Resolution height
+    %D - The Auto-Hint Resolution depth
+  These can be used for specifying desired resolutions with your RDP client.
+- Fixed a bug where cached information (which was potentially invalid) was
+  not flushed completely across a new connection to a server
+- Fixed a guest cloning bug where the machine reference was being used before
+  the guest was fully cloned, causing GUI deadlock until the clone had
+  completed
+- Fixed adding a host only network interfaces where the new interface would not
+  immediately show up. Primarily only affected windows hosts
+- ### Fixed a bug preventing logging in when using Perl 5.18 ###
+  (Actually fixed in RemoteBox v1.8)
+- Improved remote file path handling across disparate operating systems (again)
+- Improved remote file dialogs
+- Improved progress dialogs. They show time remaining where available and can
+  be cancelled where VirtualBox allows.
+- Spin boxes now accept case insensitive unit qualifiers where applicable:
+  (eg MB, GB, TB) for specifying memory and disk sizes
+  (eg ms, secs, mins) for specifying time
+- Worked around a bug where VirtualBox strips the leading path of a location
+  on a reload when a double / is found in the path. This could cause disks to
+  be inaccessible (due to incorrect path) when VirtualBox is reloaded.
+- Various GUI tweaks
+
+
+1.6 (20 Oct 2013)
+-----------------
+
+- This version brings VirtualBox 4.3.x support and drops support for the
+  VirtualBox 4.2.x branch
+- Rebased from GTK 2.22 to GTK 2.24 as a minimum requirement
+- Default rdesktop preference now enables guest sound support and clipboard
+  sharing.
+  rdesktop -r sound:local -r clipboard:PRIMARYCLIPBOARD -T "%n - RemoteBox" %h:%p
+- Added preference to automatically add the VBoxAdditions.iso to the Virtual
+  Media Manager when connecting to a server.
+- Added USB Multi-Touch pointing device support
+- Added RemoteBox preference to set the default RDP Port range for new guests
+- Added Discard Saved State toolbutton and menu option
+- Added Clear Connection History menu item to the File menu
+- Added configuration evaulation option to the tools menu of the edit settings
+  dialog. It evaluates the current guest settings and makes recommendations.
+- Added support for attaching SCSI and SAS CD/DVDs to guests
+- Added auto-hint resolution option to preferences
+- Refreshed guest operating system icons
+- Now sets the default RDP port range for new guests created with RemoteBox to
+  3389-4389, instead of a random port. This makes firewall configuration easier
+  and VirtualBox will automatically use the next free port to avoid conflicts
+- Fixed exception when reading an empty or non-existant guest log
+- Fixed double-line spacing when showing guest logs from Windows servers
+- Fixed a bug when releasing DVD or Floppy media from the VMM. It no longer
+  removes the virtual floppy or dvd drive, but just ejects the floppy or dvd
+  image.
+- Fixed several bugs when editing the host-only networks - some outdated API
+  calls were being used which generated an exception
+- Fixed some path handling bugs affecting Windows
+- Moved hardware virtualization exclusive option from guest settings to the
+  VirtualBox preferences as it's now a global option in VirtualBox
+- Dropped WinMM audio. Guests using this will automatically be mapped to the
+  Null audio driver but can be manually changed to DirectSound if required
+- Various GUI tweaks and code optimisations
+
+
+1.5 (26 Nov 2012)
+-----------------
+
+- Most of the guest's settings can now be changed while the guest is running,
+  which should reduce the inconvenience of shutting the guest as previously
+  required.
+- Added ability to save screenshots of guests as PNG images.
+- Added icon for Solaris 11 (64bit) guest OS
+- Added icon for Windows 2012 (64bit) guest OS
+- Added status icons for each guest in the list
+- Added icons to the storage page when editing guest settings
+- Now uses additional 'recommendedChipset', 'recommendedAudioController',
+  'recommendedFloppy' and 'recommendedUSB' defaults when creating a new guest
+- Fixed the System->Advanced->Time Offset widget when editing guest settings.
+  The time offset could not be adjusted.
+- Fixed the Display->Remote Display->Video Stream Quality widget when editing
+  guest settings. The stream quality could not be adjusted.
+- Fixed the memory setting, it no longer artificially limits a guest to 16GB
+  of RAM
+- Various minor GUI tweaks
+- Added SSL certificate verification option
+
+
+1.4 (15 Sep 2012)
+-----------------
+
+- This version brings VirtualBox 4.2.x support and drops support for the
+  VirtualBox 4.1.x branch.
+- Added the ability to hot-plug and hot-unplug CPUs from the guest whilst it
+  is running. This requires setting the CPU hotplug option in the guest
+  settings. You are advised to read the RemoteBox manual regarding this
+  feature because support varies depending on the OS used in the guest.
+- Added support for creating QED QEMU hard disk images
+- Added support for creating QCOW QEMU hard disk images
+- Added the ability to attach physical CD/DVD drives to a guest
+- Added the ability to attach physical floppy drives to a guest
+- Improved guest session handlers and guest locking
+- Deleting a guest now deletes the associated screenshot icon (if any)
+- Increased the number of configurable network cards for a guest to 8 cards.
+  The selected card is now chosen by a combobox rather than a tab.
+- Added additional keyboard entries which send keyboard sequences of the form
+  'Alt-SysRq+x', for example Alt-SysRq+F1. These were often used under very old
+  UNIX flavours such as Dell UNIX, AT&T UNIX, ISC UNIX etc to switch between
+  virtual terminals.
+- Added button to generate a new MAC address for a virtual network card when
+  editing a guest's settings
+- Fixed a minor bug where file permissions were being shown as decimal numbers
+  in the remote file chooser, rather than the conventional octal.
+
+
+1.3 (3 June 2012)
+-----------------
+
+- Added ability to attach and detach USB devices to the guest whilst it is
+  running. Accessible from the "Machine->USB Devices" menu
+- Added option to set the guest's screenshot as it's icon. Instead of the
+  default operating system icon, you can now show a thumbnail screenshot
+  instead. Accessible from Machine->Screenshot
+- Added option to reset the guest's icon back to the default
+- Implemented a heartbeat to keep connections alive, which should stop the web
+  service from severing the connection if it's timeout has not been disabled.
+  In any case the web service should not be configured with a timeout < 60
+  seconds. The default web service timeout is 300 seconds.
+- Vastly improved connection handling in cases where RemoteBox loses its
+  connection to the server or the connection is terminated
+- Improved handling of invalid references, allow you to continue or abort the
+  current session.
+- Added option to view the guest's logs as retrieved from VirtualBox. Up to
+  four logs can be viewed.
+- Added the ability to select multiple files in the remote file choosers, where
+  appropriate. For example when adding hard disks, CDs/DVDs or floppies to the
+  VMM. This allows you to add multiple media easily in one operation.
+- Spinboxes now scale units where appropriate
+- Use tripple parameter form of open() to improve opening files with unusual
+  characters
+- Added some spinners to the progress dialogs
+- Significant optimisations to the remote file chooser code
+- Renamed File->Preferences to File->RemoteBox Preferences to make it more
+  clear that these preferences are for RemoteBox as opposed to VirtualBox
+- Changed hotkey for "File->VirtualBox Preferences" to 'b' to avoid a clash
+  with "File->Virtual Media Manager"
+- Reduced the number of busy window calls which should help the GUI feel more
+  responsive
+
+
+1.2 (30 Dec 2011)
+-----------------
+
+- Rebased from GTK 2.16 to GTK 2.22 as the minimum version. If your OS / Distro
+  is not new enough, you may wish to remain at v1.1.
+- Added support for creating Full, State and Linked clones of guests
+- When creating a parallels hard disk the image is now created with the .hdd
+  extension rather than .parallels
+- The state of the option on the connect dialog to save URLs and Usernames is
+  now remembered between RemoteBox sessions
+- Added option to attach an empty CD/DVD drive when editing a guest's settings
+- Added option to attach an empty Floppy drive when editing a guest's settings
+- Added option to manually set the port count for SATA controllers
+- Added option to mark a hard disk image as a Solid State disk
+- Added an option to mark a CD/DVD image as a Live CD/DVD.
+- Added ability to manually set the port on a controller that a medium is
+  attached to
+- Added a refresh button to the Virtual Media Manager to refresh the list of
+  current media
+- Added support for changing a disk images type to Normal, Writethrough,
+  Immutable and Multi-Attach
+- Added a facility in the VMM to provide for the duplication and copying of
+  hard disks. This also allows you to convert a disk from one format to another
+- Timestamps are now prefixed to entries in the message log
+- Hopefully finally fixed the bug where the change CD and Floppy menus were
+  available when they should not be, even though this was supposed to be fixed
+  in v1.1
+- More fixes to the DVD & Floppy items in the Machine menu. On occassions it
+  would still permit you to change disks on an unselected guest.
+- Minor bug fix when reporting errors from VirtualBox or SOAP which contained
+  <> characters. This would end up being treated as GTK markup
+- Fixed the maximum BIOS time waiting to 65535. Higher values are invalid and
+  the guest will not start until its changed.
+- The usual plethora of GUI tweaks
+- Significant code optimisation with rebasing to GTK 2.22
+
+
+1.1 (25 Oct 2011)
+-----------------
+
+- Cosmetic changes to the New Virtual Machine and Create New HD dialogs
+- Cosmetic changes to the network part of the Edit Settings dialog
+- Added support for creating a new guest without a hard disk
+- Added support for creating VMDK disk images (Dynamic, Fixed and
+  2GB Split types)
+- Added support for creating VHD disk images (Dynamic and Fixed types)
+- Added support for creating Parallels disk images (Dynamic)
+- Added additional run-time information such as the version of guest additions
+  installed when showing 'more details' for a guest
+- Added supported for setting the promiscuous mode policy on guest network
+  adapters
+- Added support for setting a generic network driver and generic properties
+- Improved the handling of ports on storage controllers, for example SATA
+  controllers are not created with all ports enabled by default
+- Improved the internal network name widget. A drop down list of internal
+  networks is now presented rather than having to manually type it
+- Now displays a warning if the server does not have the Oracle VM VirtualBox
+  Extension Pack installed or if the extension pack is outdated.
+- Fixed a minor bug when showing 'more details' for a guest. The network details
+  were not shown.
+- Fixed minor bug where the Remove and Release buttons on the VMM dialog were
+  sometimes enabled when they shouldn't have been.
+- Fixed a bug where the change CD and Floppy menus were available, even when
+  a guest was powered off
+- Attaching storage to a guest now explicitly saves the guest settings, even if
+  you subsequently press cancel in order to work around what seems to be a
+  VirtualBox bug. Previously, attaching a disk but cancelling the settings lead
+  to a dichotomy where the disk image believed it was attached to the guest but
+  the guest disagreed. This would cause side-effects such as being unable to
+  release the medium or VirtualBox complaining that a disk referenced a guest
+  which does not exist.
+
+
+1.0 (10 Aug 2011)
+-----------------
+
+- This version concentrated on bringing compatibility with VirtualBox 4.1.X.
+  New VirtualBox 4.1 features will be added in subsequent releases.
+- Fixed a particularly horrible bug which was probably introduced in 0.8 or 0.9
+  caused by the unintentional emmission of GTK signals when opening the edit
+  window for the first time on a new connection. Any guest settings which used
+  a slider (eg memory) got reset to the base value which would be saved if the
+  user chose save.
+- Fixed a bug where attempting to delete a snapshot with more than one child
+  would cause an invalid object reference.
+- Further improvements to the remote file chooser dialog. File paths are now
+  better "sanitised".
+
+
+0.9 (22 Jul 2011)
+-----------------
+
+- Added an option to Add an existing guest by selecting it's .vbox file.
+- Added a remote file chooser for setting the default machine folder. The user
+  no longer has to manually type the path.
+- Added a remote file chooser for setting a shared folder. The user no longer
+  has to manually type the path.
+- RemoteBox now tries to restore the location and size of the main window on
+  restart.
+- When removing a guest, you are now prompted to choose whether you want to
+  delete the associated files or only remove (ie just unregister) the guest
+  from VirtualBox. Caution: Do not select "Delete All Files" if your server
+  is running a 64bit Windows Edition. A bug in VirtualBox can cause it to crash
+- Fixed an issue (only really affected Mac OS X) where the preferences would
+  not be saved if the XDG preference directory did not exist.
+- Fixed a race condition which meant the context menu would not always present
+  the Mount DVD/CD and Mount Floppy options correctly.
+- Fixed an issue whereby selecting a storage unit allowed you to change the
+  controller settings. The controller settings should only be available when
+  a controller is selected.
+- Worked-around an issue on Ubuntu/Mint where the treeviews appear to emit a
+  phantom cursor-changed signal sometimes.
+- Editing of the guest's description has been moved to the settings dialog, in
+  keeping with VirtualBox's GUI.
+- When selecting a guest, a small summary of it's details are automatically
+  displayed. Fuller details can be viewed by clicking on "Show More Details"
+  The full details are not automatically displayed for performance reasons.
+- Double clicking a guest or pressing the "Show More Details" button displays
+  an in depth list of the guest's configuration which shows more information
+  than previous versions of RemoteBox
+- Tabs throughout the GUI are now reorderable and have popup menus
+- Improved the remote file chooser dialog.
+- Numerous minor GUI tweaks and improvements
+
+
+0.8 (03 Apr 2011)
+-----------------
+
+- Added support for configuring a parallel port in the guests.
+  Note: Parallel port is only supported on VirtualBox hosts running Linux.
+- Added "Advanced" and "Boot Logo" tabs to the "System" page of the
+  "Edit Settings" window.
+- The fade settings of the guest BIOS screen can now be configured.
+- The waiting time on the guest BIOS screen can also be configured. Useful for
+  pressing BIOS hot keys etc.
+- The BIOS logo is now customizable. The image file must be a 640x480
+  uncompressed BMP file with a 256 colour (8bit) palette.
+- Time offsets can now be applied to guests' clocks. The guest will run its
+  clock ahead of the host's clock with the specified offset. This is not
+  intended to replace correctly configured timezones in guests.
+- Added support for sending video hints to the guest, to change its screen
+  resolution. Several pre-defined screen resolutions exist as well as an
+  option to set a custom screen resolution. Access the resolutions from the
+  "Machine" menu
+- Added support for sending Ctrl-c and Ctrl-d keyboard sequences to the guest.
+  Access the keyboard sequences from the "Machine" menu
+- Added option to configure CPU Hot Plugging for a guest
+- Added option to configure Page Fusion for a guest. Page Fusion can reduce
+  host memory consumption when running many similar guests.
+- Added option to enable the use of Large Pages (if your OS supports them),
+  this can provide a small performance increase
+- Added ability to set the amount of host CPU time each guest is allowed to
+  consume
+- Added support for setting the virtual keyboard type. Supported types are:
+  None, PS2, USB, and Combo.
+- Added an option to provide a guest with an HPET (High Precision Event Timer)
+- Added an option to allow VirtualBox to share the hardware virtualization
+  extensions (VT-x/AMD-V) with other Hypervisors.
+- Added a caching mechanism to the editing of guest settings which should speed
+  up the opening of the "Edit Settings" window.
+- Added a remotebox preference to automatically open the guest's display when
+  the guest is started. Default is enabled, but can be disabled in preferences
+- Added a remotebox preference to configure the default action of the "Stop"
+  button. Previously it defaulted to "Instant Power Off" but can now be
+  configured to do an "ACPI Shutdown" or "Save State". Note, the button's popup
+  menu is still available to choose an alternative from the default
+- The message log now remembers whether it was expanded or not between program
+  runs.
+- The "Serial" page of the "Edit Settings" window has now been renamed to
+  "I/O Ports"
+- Various minor tweaks to the GUI
+- Fixed preference file handling in the unlikely case where a parameter
+  contains an '=' character.
+
+
+0.7 (20 Feb 2011)
+-----------------
+
+- Implemented a file selector dialog for navigating the file system on the
+  remote server. This means hard disk images, CD/DVD isos and floppy disk
+  images can be added into VirtualBox easily. You no longer need to manually
+  type the complete path and remember the location.
+- Fixed the message log scrolling. It now automatically scrolls completely to
+  the bottom.
+- The message log can now be made hidden or visible using an expander.
+- CDs, DVDs and Floppies can now be added directly by selecting the DVD or
+  Floppy Drive when editing the storage for guest. You no longer need to select
+  the controller itself.
+- The VMM now shows if media is not accessible in the list views, with the
+  reason shown as a tooltip
+- Fixed regression which was disallowing the removal ('deletion') of
+  inaccessible hard disks.
+- Fixed a regression where DVDs/CDs & Floppies could not be unmounted from the
+  RMB menu.
+- The 'Use existing hard disk' option when creating a new guest now lists the
+  existing hard disks in alphabetical order.
+- Major optimisation of show_rmb_menu(), should help the right mouse button
+  menu feel more responsive, particularly on slow connections. Also the right
+  mouse button popup menu is now identical to the main Machine menu.
+- Added location field to bottom of VMM dialog
+- Hopefully fixed an issue where UTF-8 characters could cause the SOAP module
+  to raise an exception.
+- Added Ctrl-Alt-Backspace, Ctrl-Alt-F1, Ctrl-Alt-F2, Ctrl-Alt-F3, Ctrl-Alt-F7
+  and Ctrl-Alt-F12 guest keyboard inserts.
+
+
+0.6 (25 Jan 2011)
+-----------------
+
+RemoteBox now requires at least version 4.0.X of VirtualBox
+
+- Removed default hard disk folder preference. No longer required with
+  VirtualBox 4
+- As VirtualBox 4 now consolidates storage and guest settings together, the
+  creation of new hard disk images has been moved to the storage tab under the
+  guest settings and is no longer part of the Virtual Media Manager.
+- Further improved the defaults when creating a new guest, including HPET,
+  Pointer Type, Network Adapter Type and RTC
+- Added support for Intel HDA audio controller
+- Added support for auto-mounting VirtualBox shared folders
+- Added support for setting the motherboard chipset (PIIX3 or ICH9)
+- Added icon for JRockitVE
+- Attaching CD/DVD drives to SATA controllers is now permitted
+- Shared folders list now warns if a shared folder is not accessible
+
+
+0.5 (21 Nov 2010)
+-----------------
+
+- Added support for creating, editing, deleting and enabling USB device filters
+  (Machine->Settings->USB)
+- Added support for pausing and resuming guest execution
+  (Machine->Pause), (Machine->Resume)
+- Added an option for setting the clipboard mode between guest and host
+- Added an option to specify the remote display quality.
+- Added icons to the OS Version comboboxes
+- Added icons to the OS Family comboboxes
+- Added progress bar windows which pop up for potentially lengthy operations
+- Added option to configure the default hard disk folder.
+  - (File->VirtualBox Preferences->General)
+- Added option to configure default machine folder.
+  - (File->VirtualBox Preferences->General)
+- Added option to set the VRDP authentication library.
+  - (File->VirtualBox Preferences->General)
+- Added support for adding, removing and editing host-only networks, including
+  the configuration of the DHCP server
+  - (File->VirtualBox Preferences->Network)
+- The snapshot details dialog now lets you edit the name and description of an
+  existing snapshot
+- Replaced the status bar with a messages list which holds more history
+- Moved the user config file to the freedesktop location as specified by
+  get_user_config_dir(). On most distros this usually expands to
+  $HOME/.config/remotebox.conf. You will need to move your existing config file
+  if you wish to preserve it.
+- RemoteBox no longer exclusively uses the first port specified in the guest
+  config when attempting an RDP connection. This means RemoteBox will still
+  connect to the remote display when the server chooses another port if the
+  primary port is already in use.
+- Lots of code restructuring and cleanup
+- Deleting a medium which is locked by another process should no longer produce
+  a bunch of unmanaged object reference messages.
+
+
+0.4 (18 Oct 2010)
+-----------------
+
+- Media lists in the VMM are sortable and sorted alphabetically by default.
+- The VMM now shows any snapshots of the base medium and has had some minor
+  cosmetic alterations
+- The guest list now shows the current active snapshot for each guest and has
+  had some minor cosmetic alterations
+- Added the ability to take, delete, restore and view the details of
+  snapshots
+- The list of media to attach on the edit storage page is now sorted
+  alphabetically
+- In the details list, the storage name shown is now the name of the base
+  medium, in the case of snapshots.
+- A failed reconnect now properly clears the treeviews and resets button states
+- Fixed the unmanaged object warning on some failed logins
+- Fixed exception when clicking on an empty guest list
+
+
+0.3 (17 Jul 2010)
+-----------------
+
+- Added operating system icons to the guest list.
+- Removable media can now be changed whilst the guest is running. Access it
+  from the popup menu in the guest list.
+- Added support for configuring the serial ports of a guest
+- Added support for configuring the shared folders available to a guest
+- Added option to disable/enable the use of host I/O caching
+- Displays a message with the reason, if a guest can't be started.
+- Reports back error messages from the web service.
+- Significant improvements to the session handling.
+- Various minor modifications to the GUI.
+- Media with underscores in the filename were generating accelerator
+  keys in menus, which has been fixed
+- Non explicit selections in treeviews returned empty values which has been
+  fixed. Only Ubuntu 10 seemed affected, probably due to a behaviour change
+  in the shipped version of GTK/Gtk2-perl
+- Also sets the EFI checkbox when editing a guest's settings if the firmware is
+  set to EFI32, EFI64 and EFIDUAL rather than just EFI.
+
+
+0.2 (26 Jun 2010)
+-----------------
+
+- Added "Connect to Server" and "Reset" menu items.
+- Added icons to most tabs on the Main, Edit, VMM, New Guest and New Hard Disk
+  windows.
+- Added reset toolbutton.
+- Added support for setting UTC hardware clocks.
+- Added support for setting the virtual mouse type. Supported types are: None,
+  PS2, USB, USB Tablet and Combo.
+- Added support for setting the number of virtual monitors.
+- The option to set the RDP authentication method is now supported.
+- The option to set the RDP timeout value is now supported.
+- Added an option to allow multiple remote display connections to a single
+  guest.
+- Guests (without snapshots) can now be deleted.
+- Added scrollbars to the Hard Disk, CD/DVD and Floppy disks list in the VMM
+  window.
+- Added context sensitive menu to guest list (press right mouse button).
+- Added initial keyboard support, Ctrl-Alt-Del added to context sensitive menu
+  on guest list.
+- The Guest Name, Operating System and Status columns are now sortable by
+  clicking on the column headers
+- The storage page of the settings window has been completely revamped
+- The toolbar icons on the Main and VMM windows have been updated
+- The main menu icons have been updated.
+- Most windows and dialogs are now transients of their parents.
+- The Stop toolbar button no longer opens a dialog, but has a side menu which
+  lets you choose the type of shutdown.
+- The Stop menu item no longer opens a dialog, but opens a sub menu to choose
+  the type of shutdown.
+- Various subtle changes to the UI
+- Fixed the audio driver decoding in 'Details' which could lead to an exception
+  when performing subsequent tasks.
+- You can no longer add a CD/DVD device and ISO to a non IDE storage controller
+  as this is not yet supported by VirtualBox and would prevent the guest from
+  starting.
+- Fixed the start option which was broken in the Machine menu due to a last
+  minute change.
+- Fixed duplicate entries in the OS Version lists when reconnecting.
+
+
+0.1 (12 Jun 2010)
+-----------------
+
+- Initial Release

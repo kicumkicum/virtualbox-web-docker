@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=RemoteBox
+Comment=Remote VirtualBox client
+Exec=remotebox
+Icon=remotebox
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=Emulator;System;

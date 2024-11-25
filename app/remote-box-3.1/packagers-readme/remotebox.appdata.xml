@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2010-2022 Ian Chapman <packages[AT]amiga-hardware.com> -->
+<component type="desktop">
+  <id>remotebox.desktop</id>
+  <metadata_license>GFDL-1.3</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>RemoteBox: VirtualBox Client</name>
+  <summary>A remote client for administering VirtualBox and its guests</summary>
+  <description>
+    <p>
+        RemoteBox is an open-source VirtualBox client which means you can remotely administer (ie over the network) an
+        installation of VirtualBox on a server, including its guests and interact with them as if they were running locally.
+        VirtualBox is installed on the server machine and RemoteBox runs on the client machine. RemoteBox provides a
+        complete Gtk 3 graphical interface with a look and feel similar to that of VirtualBox's native GUI and supports the
+        vast majority of features.
+    </p>
+  </description>
+  <screenshots>
+    <screenshot height="1080" width="1920" type="default">
+      <image>http://remotebox.knobgoblin.org.uk/screenshots/fedora.png</image>
+      <caption/>
+    </screenshot>
+  </screenshots>
+  <url type="homepage">http://remotebox.knobgoblin.org.uk</url>
+  <update_contact>packages_at_amiga-hardware.com</update_contact>
+  <translation/>
+  <developer_name>Ian Chapman</developer_name>
+  <url type="bugtracker">https://sourceforge.net/p/remotebox/tickets/</url>
+  <url type="donation">http://remotebox.knobgoblin.org.uk/</url>
+  <url type="help">http://remotebox.knobgoblin.org.uk/docs/remotebox.pdf</url>
+</component>
