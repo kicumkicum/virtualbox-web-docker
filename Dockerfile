@@ -29,21 +29,21 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y kmod
 
 # Скачивание и установка VirtualBox 6.1.12
-COPY app/VirtualBox-6.1.12-139181-Linux_amd64.run /app/VirtualBox-6.1.12-139181-Linux_amd64.run
+COPY src/app/VirtualBox-6.1.12-139181-Linux_amd64.run /app/VirtualBox-6.1.12-139181-Linux_amd64.run
 RUN chmod +x /app/VirtualBox-6.1.12-139181-Linux_amd64.run
 RUN echo 'yes' | /app/VirtualBox-6.1.12-139181-Linux_amd64.run --nox11 || true
 RUN rm /app/VirtualBox-6.1.12-139181-Linux_amd64.run
 
-COPY app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack /app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack
+COPY src/app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack /app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack
 RUN echo 'y' | /usr/bin/VBoxManage extpack install /app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack ; true
 RUN rm /app/Oracle_VM_VirtualBox_Extension_Pack-6.1.12.vbox-extpack
 
 RUN VBoxManage setproperty websrvauthlibrary null
 
 # Копируем конфиг Supervisor. Вернуть на место вверх после отладки
-COPY etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY .config/openbox/rc.xml /root/.config/openbox/rc.xml
-COPY app/bin/start-virtualbox.sh /app/bin/start-virtualbox.sh
+COPY src/etc/supervisor/conf.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY src/.config/openbox/rc.xml /root/.config/openbox/rc.xml
+COPY src/app/bin/start-virtualbox.sh /app/bin/start-virtualbox.sh
 RUN chmod +x /app/bin/start-virtualbox.sh
 
 RUN mkdir -p /app/data
