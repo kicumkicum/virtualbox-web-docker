@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  virtualbox-web:
+    image: kicumkicum/virtualbox-web:6.1.12
+    privileged: true
+    ports:
+      - "5900:5900" # VNC web
+      - "5901:5901" # VNC app
+      - "18083:18083" # VirtualBox web
+      - "3389:3389" # VirtualBox RDP
+    volumes:
+      - /FOO_BAR/:/app/data # Any data
+      - /FOO_BAR/lib/modules/6.8.0-49-generic/misc/:/app/kernel-modules/ # VirtualBox kernel modules
+      - /FOO_BAR:/app/inject-volumes/ # Inject dirs for virtual machines
+      - /FOO_BAR:/app/iso # ISO
+      - "/FOO_BAR:/root/VirtualBox VMs" # Virtual machines
+      - /dev:/dev
+      - /dev/pts:/dev/pts
+      - /proc:/proc
+      - /sys:/sys
